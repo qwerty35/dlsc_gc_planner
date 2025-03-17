@@ -1,16 +1,14 @@
 # dlsc_gc_planner
 
-This package presents the source code of "Decentralized Trajectory Planning for Quadrotor Swarm in Obstacle-rich Environments with Goal Convergence Guarantee".
-The details about this algorithm can be found at the following links.
+This package presents the source code of "Decentralized Trajectory Planning for Quadrotor Swarm in Cluttered Environments with Goal Convergence Guarantee".
 
-- **Authors:** Jungwon Park, Yunwoo Lee, Inkyu Jang, and H. Jin Kim from [LARR](http://larr.snu.ac.kr/), Seoul National University
-- **Paper:** [Extended version](https://arxiv.org/abs/2209.09447) (NOTE: this version includes the detailed proof that omitted in the ICRA version)
-- **Video:** [Youtube](https://youtu.be/PqfdbVfSujA)
+- **Authors:** Jungwon Park ([LARS](https://lars.seoultech.ac.kr/), SeoulTech), Yunwoo Lee, Inkyu Jang, and H. Jin Kim ([LARR](http://larr.snu.ac.kr/), Seoul National University)
+- **Paper:** [IJRR](https://journals.sagepub.com/doi/full/10.1177/02783649241312352)
+- **Video:** [Youtube](https://youtu.be/AH_L9LO-arU?si=Xp28KLiMbtH0aS3a)
 
-%TODO: fix above links
 
-![alt text](images/thumbnail.gif)
-%TODO: fix above
+![alt text](images/thumbnail1.gif)
+![alt text](images/thumbnail2.gif)
 
 ## 1. Install
 This work is implemented based on C++17. Tested in the ROS Melodic, Ubuntu 18.04
@@ -36,12 +34,13 @@ sudo apt-get install ros-$ROS_DISTRO-octomap
 sudo apt-get install ros-$ROS_DISTRO-octomap-*
 sudo apt-get install ros-$ROS_DISTRO-dynamic-edt-3d
 cd ~/catkin_ws/src
+git clone https://github.com/qwerty35/dlsc_gc_msgs.git
 git clone https://github.com/qwerty35/dlsc_gc_planner.git
 ```
 
-(5) Before building packages, check CMAKELIST that CPLEX_PREFIX_DIR is indicating the intallation location. For instance, if CPLEX is installed in ```/opt/ibm/ILOG/CPLEX_Studio201```, then CPLEX_PREFIX_DIR should be:
+(5) Before building packages, check CMAKELIST that CPLEX_PREFIX_DIR is indicating the intallation location. For instance, if CPLEX is installed in ```/opt/ibm/ILOG/CPLEX_Studio2211```, then CPLEX_PREFIX_DIR should be:
 ```
-set(CPLEX_PREFIX_DIR /opt/ibm/ILOG/CPLEX_Studio201)
+set(CPLEX_PREFIX_DIR /opt/ibm/ILOG/CPLEX_Studio2211)
 ```
 
 (6) Build packages
@@ -57,20 +56,20 @@ source ~/catkin_ws/devel/setup.bash
 source ~/catkin_ws/devel/setup.bash
 roslaunch dlsc_gc_planner simulation.launch
 ```
-- Run simulation in the random forest sequentially 
+- Run 3D simulation in empty spaces sequentially
 ```
 source ~/catkin_ws/devel/setup.bash
-roslaunch dlsc_gc_planner test_all_forest.launch
+roslaunch dlsc_gc_planner testall_DLSCDR_empty.launch
 ```
-- Run simulation in the sparse maze sequentially
-```
-source ~/catkin_ws/devel/setup.bash
-roslaunch dlsc_gc_planner test_all_maze_sparse.launch
-```
-- Run simulation in the dense maze sequentially
+- Run 2D simulation in obstacle environments sequentially
 ```
 source ~/catkin_ws/devel/setup.bash
-roslaunch dlsc_gc_planner test_all_maze_dense.launch
+roslaunch dlsc_gc_planner testall_DLSCGC_2D.launch
+```
+- Run 3D simulation in obstacle environments sequentially
+```
+source ~/catkin_ws/devel/setup.bash
+roslaunch dlsc_gc_planner testall_DLSCGC_3D.launch
 ```
 The simulation result will be saved at ```dlsc_gc_planner/log```.
 

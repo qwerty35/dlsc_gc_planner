@@ -123,7 +123,7 @@ Visualization Manager:
       Marker Topic: /obs_pred_traj_vis
       Name: ObsPredTraj
       Namespaces:
-        {}
+        "": true
       Queue Size: 100
       Value: true
     - Class: rviz/MarkerArray
@@ -150,7 +150,8 @@ Visualization Manager:
       Marker Topic: /obstacle_collision_model
       Name: ObsCollisionModel
       Namespaces:
-        {}
+        observed: true
+        true: true
       Queue Size: 100
       Value: true
     - Class: rviz/MarkerArray
@@ -250,10 +251,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 135.5234832763672
+      Scale: 98.61211395263672
       Target Frame: <Fixed Frame>
-      X: 2.1170029640197754
-      Y: 2.2405037879943848
+      X: 0.7353634238243103
+      Y: 0.11159372329711914
     Saved: ~
 Window Geometry:
   Displays:
@@ -271,5 +272,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1853
-  X: 1199
-  Y: 86
+  X: 878
+  Y: 145

@@ -42,7 +42,7 @@
     <param name="log_vis" value="$(arg log_vis)" />
 
     <!-- Planner mode -->
-    <param name="mode/planner" value="lsc" /> <!-- lsc: LSC planner -->
+    <param name="mode/planner" value="dlsc_gc" /> <!-- dlsc_gc: DLSC_GC planner -->
     <param name="mode/goal" value="grid_based_planner" /> <!-- mode/goal - deadlock resolution method
                                                                grid_based_planner: goal planning with grid_based_planner-->
     <param name="mode/mapf" value="pibt" /> <!-- mode/mapf - decentralized multi-agent path finding algorithm

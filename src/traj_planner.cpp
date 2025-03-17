@@ -18,7 +18,7 @@ namespace MATP {
         planner_seq = 0;
         is_disturbed = false;
         initialize_sfc = false;
-        if (param.planner_mode == PlannerMode::LSC) {
+        if (param.planner_mode == PlannerMode::DLSCGC or param.planner_mode == PlannerMode::LSC) {
             initialize_sfc = true;
         }
 
@@ -139,6 +139,29 @@ namespace MATP {
         }
 
         switch (param.planner_mode) {
+            case PlannerMode::DLSCGC:
+                if (param.multisim_time_step != param.dt) {
+                    throw std::invalid_argument("[TrajPlanner] multisim_time_step must be equal to the segment time");
+                }
+                if (param.prediction_mode != PredictionMode::PREVIOUSSOLUTION) {
+                    ROS_WARN("[TrajPlanner] prediction_mode of DLSC_GC must be previous_solution, fix automatically");
+                    param.prediction_mode = PredictionMode::PREVIOUSSOLUTION;
+                }
+                if (param.initial_traj_mode != InitialTrajMode::PREVIOUSSOLUTION) {
+                    ROS_WARN("[TrajPlanner] init_traj_mode of DLSC_GC must be previous_solution, fix automatically");
+                    param.initial_traj_mode = InitialTrajMode::PREVIOUSSOLUTION;
+                }
+                if(param.slack_mode != SlackMode::NONE) {
+                    ROS_WARN("[TrajPlanner] DLSC_GC does not need slack variables, fix to none");
+                    param.slack_mode = SlackMode::NONE;
+                    traj_optimizer->updateParam(param);
+                }
+                if(param.goal_mode != GoalMode::GRIDBASEDPLANNER) {
+                    ROS_WARN("[TrajPlanner] goal_mode of DLSC_GC must be grid_based_planner, fix automatically");
+                    param.goal_mode = GoalMode::GRIDBASEDPLANNER;
+                    traj_optimizer->updateParam(param);
+                }
+                break;
             case PlannerMode::DLSC:
                 if (param.multisim_time_step > param.dt) {
                     throw std::invalid_argument("[TrajPlanner] multisim_time_step must be smaller than segment time");
@@ -476,8 +499,8 @@ namespace MATP {
         // LSC (or BVC) construction
         ros::Time lsc_start_time = ros::Time::now();
         constraints.initializeLSC(obstacles);
-        if (param.planner_mode == PlannerMode::LSC and param.goal_mode == GoalMode::GRIDBASEDPLANNER){ // ICRA 2023
-            generateCLSC();
+        if (param.planner_mode == PlannerMode::DLSCGC){
+            generateDLSCGC();
         } else if (param.planner_mode == PlannerMode::DLSC or param.planner_mode == PlannerMode::LSC) { // RAL 2022
             generateLSC();
         } else if (param.planner_mode == PlannerMode::RECIPROCALRSFC) { // RAL 2021
@@ -577,7 +600,7 @@ namespace MATP {
         }
     }
 
-    void TrajPlanner::generateCLSC() {
+    void TrajPlanner::generateDLSCGC() {
         for (int oi = 0; oi < obstacles.size(); oi++) {
             double collision_dist = obstacles[oi].radius + agent.radius;
 
@@ -683,7 +706,7 @@ namespace MATP {
     }
 
     void TrajPlanner::checkWaypointTrap() {
-        if(param.planner_mode != PlannerMode::LSC or param.goal_mode != GoalMode::GRIDBASEDPLANNER or obstacles.empty()) {
+        if(param.planner_mode != PlannerMode::DLSCGC or param.goal_mode != GoalMode::GRIDBASEDPLANNER or obstacles.empty()) {
             return;
         }
 

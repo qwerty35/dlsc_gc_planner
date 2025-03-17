@@ -164,7 +164,7 @@ namespace MATP {
 
         void generateLSC();
 
-        void generateCLSC();
+        void generateDLSCGC();
 
         void generateBVC();
 

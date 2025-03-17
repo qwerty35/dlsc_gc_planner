@@ -514,7 +514,7 @@ namespace MATP {
 
         // Additional constraints for feasible LSC
         // Stop at the end of planning horizon
-        if (param.planner_mode == PlannerMode::LSC) {
+        if (param.planner_mode == PlannerMode::DLSCGC or param.planner_mode == PlannerMode::LSC) {
             for (int k = 0; k < dim; k++) {
                 int m = M - 1;
                 for (int i = 1; i < phi; i++) {

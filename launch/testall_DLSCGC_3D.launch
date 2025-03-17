@@ -3,7 +3,7 @@
 <launch>
 <!-- Parameters -->
   <!-- Mission -->
-  <arg name="mission" default="maze10_sparse"/> <!-- Mission file, see missions/readme.txt for more details -->
+  <arg name="mission" default="forest10_spin4_50"/> <!-- Mission file, see missions/readme.txt for more details -->
   <arg name="experiment" default="false" /> <!-- For experiment -->
   <arg name="patrol" default="false"/> <!-- Change the mission to patrol between start and goal points -->
   <arg name="max_noise" default="0.0"/> <!-- Add noise to start and goal point -->
@@ -11,7 +11,7 @@
 
   <!-- Map -->
   <arg name="use_octomap" default="true"/> <!-- Use octomap to set obstacle environment. -->
-  <arg name="world_file_name" default="maze_icra2023/sparse"/> <!-- CSV (.csv) or Octomap (.bt) file name. File must be in dlsc_gc_planner/world-->
+  <arg name="world_file_name" default="forest_tro2022"/> <!-- CSV (.csv) or Octomap (.bt) file name. File must be in dlsc_gc_planner/world-->
   <arg name="world_use_global_map" default="true"/>
   <arg name="world_frame_id" default="world"/> <!-- World frame id used in Rviz -->
   <arg name="world_resolution" default="0.1"/> <!-- Octomap resolution -->
@@ -42,7 +42,7 @@
     <param name="log_vis" value="$(arg log_vis)" />
 
     <!-- Planner mode -->
-    <param name="mode/planner" value="lsc" /> <!-- lsc: LSC planner -->
+    <param name="mode/planner" value="dlsc_gc" /> <!-- lsc: LSC planner -->
     <param name="mode/goal" value="grid_based_planner" /> <!-- mode/goal - deadlock resolution method
                                                                grid_based_planner: goal planning with grid_based_planner-->
     <param name="mode/mapf" value="pibt" /> <!-- mode/mapf - decentralized multi-agent path finding algorithm
@@ -54,7 +54,7 @@
     <!-- World -->
     <param name="world/frame_id" value="$(arg world_frame_id)" /> <!-- world frame id used in Rviz -->
     <param name="world/file_name" value="$(arg world_file_name)" /> <!-- world frame id used in Rviz -->
-    <param name="world/dimension" value="2" /> <!-- 2: 2D simulation, 3: 3D simulation -->
+    <param name="world/dimension" value="3" /> <!-- 2: 2D simulation, 3: 3D simulation -->
     <param name="world/use_octomap" value="$(arg use_octomap)" />
     <param name="world/use_global_map" value="$(arg world_use_global_map)" />
     <param name="world/resolution" value="$(arg world_resolution)" /> <!-- Octomap resolution -->
@@ -93,7 +93,7 @@
     <param name="grid/safe_distance" value="4" /> <!-- Safe distance for dynamic obstacle avoidance, integer -->
 
     <!-- Goal -->
-    <param name="plan/goal_threshold" value="0.1" /> <!-- Mission complete when the distance between the agent and goal point is smaller than this. -->
+    <param name="plan/goal_threshold" value="0.6" /> <!-- Mission complete when the distance between the agent and goal point is smaller than this. -->
     <param name="plan/priority_agent_distance" value="0.4" /> <!-- Try to broaden distance between agents over this parameter-->
     <param name="plan/priority_obs_distance" value="1.0" /> <!-- Try to broaden distance between agent and obstacle over this parameter -->
     <param name="plan/priority_goal_threshold" value="0.6" /> <!-- Parameter of priority function -->
@@ -101,8 +101,8 @@
     <param name="plan/slack_threshold" value="0.1" /> <!-- If slack cost is lower than this, then the obstacle is considered as collision predicted obstacle -->
 
     <!-- Obstacle -->
-    <param name="obs/uncertainty_horizon" value="1.0" />
-    <param name="obs/duration" value="25" /> <!-- (Simulation only) obstacle remains for obs_duration -->
+    <param name="obs/uncertainty_horizon" value="0.7" />
+    <param name="obs/duration" value="60" /> <!-- (Simulation only) obstacle remains for obs_duration -->
 
     <!-- Parameters for experiment -->
     <param name="landing_time" value="3.0" />

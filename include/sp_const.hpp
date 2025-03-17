@@ -16,6 +16,7 @@ namespace MATP {
     typedef std::vector<point3d> point3ds;
 
     enum class PlannerMode {
+        DLSCGC,
         DLSC,
         LSC,
         BVC,

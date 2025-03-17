@@ -120,8 +120,17 @@ namespace MATP {
 
         // Planner mode
         std::string planner_mode_str;
-        nh.param<std::string>("mode/planner", planner_mode_str, "dlsc");
-        if (planner_mode_str == "dlsc") {
+        nh.param<std::string>("mode/planner", planner_mode_str, "dlsc_gc");
+        if (planner_mode_str == "dlsc_gc") {
+            planner_mode = PlannerMode::DLSCGC;
+            prediction_mode = PredictionMode::PREVIOUSSOLUTION;
+            initial_traj_mode = InitialTrajMode::PREVIOUSSOLUTION;
+            if (multisim_time_step == dt) {
+                slack_mode = SlackMode::NONE;
+            } else {
+                ROS_ERROR("[Param] Invalid parameter, multisim_time_step != dt");
+            }
+        } else if (planner_mode_str == "dlsc") {
             planner_mode = PlannerMode::DLSC;
             prediction_mode = PredictionMode::PREVIOUSSOLUTION;
             initial_traj_mode = InitialTrajMode::PREVIOUSSOLUTION;
@@ -167,7 +176,7 @@ namespace MATP {
     }
 
     std::string Param::getPlannerModeStr() const {
-        const std::string planner_mode_strs[] = {"DLSC", "LSC", "BVC", "ORCA", "ReciprocalRSFC", "CircleTest"};
+        const std::string planner_mode_strs[] = {"DLSCGC", "DLSC", "LSC", "BVC", "ORCA", "ReciprocalRSFC", "CircleTest"};
         return planner_mode_strs[static_cast<int>(planner_mode)];
     }
 
