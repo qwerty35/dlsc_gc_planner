@@ -59,7 +59,7 @@ roslaunch dlsc_gc_planner simulation.launch
 - Run 3D simulation in empty spaces sequentially
 ```
 source ~/catkin_ws/devel/setup.bash
-roslaunch dlsc_gc_planner testall_DLSCDR_empty.launch
+roslaunch dlsc_gc_planner testall_DLSCGC_empty.launch
 ```
 - Run 2D simulation in obstacle environments sequentially
 ```
