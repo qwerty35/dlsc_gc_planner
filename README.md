@@ -7,8 +7,8 @@ This package presents the source code of "Decentralized Trajectory Planning for 
 - **Video:** [Youtube](https://youtu.be/AH_L9LO-arU?si=Xp28KLiMbtH0aS3a)
 
 
-![alt text](images/thumbnail1.gif)
-![alt text](images/thumbnail2.gif)
+<img src="images/thumbnail1.gif" alt="alt text" width="45%"/> <img src="images/thumbnail2.gif" alt="alt text" width="45%"/>
+
 
 ## 1. Install
 This work is implemented based on C++17. Tested in the ROS Melodic, Ubuntu 18.04
